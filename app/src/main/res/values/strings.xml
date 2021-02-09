@@ -3,4 +3,5 @@
     <string name="aplicationToolbarPlaceHolder">TheMovie DB Application!</string>
     <string name="getMoviesContent">Get Movies from request.</string>
     <string name="searchIconContent">Search Icon</string>
+    <string name="searchMoviePlaceHolder">Search for a movie</string>
 </resources>

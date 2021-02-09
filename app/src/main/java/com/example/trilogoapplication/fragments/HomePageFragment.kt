@@ -6,12 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import com.example.trilogoapplication.HomePageViewModel
 import com.example.trilogoapplication.R
 import com.example.trilogoapplication.databinding.FragmentHomePageBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class HomePageFragment: Fragment() {
+class HomePageFragment : Fragment() {
 
     private lateinit var homeBinding: FragmentHomePageBinding
+    private val homeViewModel: HomePageViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +26,8 @@ class HomePageFragment: Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false)
+        homeBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false)
 
         setViewClickListeners()
 
@@ -33,7 +40,13 @@ class HomePageFragment: Fragment() {
         }
 
         homeBinding.floatingActionButton.setOnClickListener {
-            ///TODO Adicionar request.
+            GlobalScope.launch {
+                homeViewModel.getMovies()
+
+                activity?.runOnUiThread {
+                    //TODO Criar livedata na viewModel.
+                }
+            }
         }
     }
 }

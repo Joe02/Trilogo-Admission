@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    tools:ignore="InvalidNavigation"
+    app:startDestination="@id/home">
+
+
+    <fragment
+        android:id="@+id/homePageFragment"
+        android:name="com.example.trilogoapplication.fragments.HomePageFragment"
+        android:label="HomePageFragment" >
+        <action
+            android:id="@+id/action_homePageFragment_to_searchPageFragment"
+            app:destination="@id/searchPageFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchPageFragment"
+        android:name="com.example.trilogoapplication.fragments.SearchPageFragment"
+        android:label="SearchPageFragment" />
+
+</navigation>
