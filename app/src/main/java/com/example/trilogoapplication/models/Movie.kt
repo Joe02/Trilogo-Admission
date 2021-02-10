@@ -11,5 +11,4 @@ data class Movie(
     @SerializedName("popularity") var popularity: Double? = null,
     @SerializedName("poster_path") var posterPath: String? = null,
     @SerializedName("vote_average") var review: String? = null
-) {
-}
+)

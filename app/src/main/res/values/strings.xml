@@ -2,8 +2,6 @@
     <string name="app_name">Trilogo Application</string>
     <string name="aplicationToolbarPlaceHolder">TheMovie DB Application!</string>
     <string name="getMoviesContent">Get Movies from request.</string>
-    <string name="searchIconContent">Search Icon</string>
-    <string name="searchMoviePlaceHolder">Search for a movie</string>
     <string name="movieDetailsContent">Open movie\'s details</string>
     <string name="moviePosterContent">Movie poster</string>
     <string name="nextPageContent">Next Page</string>

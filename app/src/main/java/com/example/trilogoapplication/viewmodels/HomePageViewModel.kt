@@ -2,10 +2,8 @@ package com.example.trilogoapplication.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.trilogoapplication.models.Movie
 import com.example.trilogoapplication.models.RequestResult
 import com.example.trilogoapplication.utils.RetrofitUtil
-import java.lang.Exception
 
 class HomePageViewModel : ViewModel() {
 

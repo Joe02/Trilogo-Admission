@@ -50,7 +50,7 @@ class HomePageFragment : Fragment() {
         moviesListAdapter =
             context?.let { it1 -> MoviesListAdapter(movieRequest.results, it1) }!!
 
-        if(!movieRequest.results.isEmpty()) {
+        if(movieRequest.results.isNotEmpty()) {
             homeBinding.nextPage.visibility = View.VISIBLE
             homeBinding.previousPage.visibility = View.VISIBLE
         }
@@ -81,11 +81,13 @@ class HomePageFragment : Fragment() {
             homeBinding.nextPage.visibility = View.VISIBLE
             homeBinding.previousPage.visibility = View.VISIBLE
 
+            homeBinding.floatingActionButton.visibility = View.GONE
+
             doRequest()
         }
     }
 
-    fun doRequest() {
+    private fun doRequest() {
         (
                 GlobalScope.launch {
 
@@ -125,7 +127,7 @@ class HomePageFragment : Fragment() {
                 })
     }
 
-    fun setRecyclerItemClickListener() {
+    private fun setRecyclerItemClickListener() {
         moviesListAdapter.onItemClick = {
                 movie -> val args = Bundle()
             args.putString("moviePoster", movie.posterPath)
