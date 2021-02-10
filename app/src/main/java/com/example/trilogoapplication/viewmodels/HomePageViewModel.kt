@@ -9,7 +9,7 @@ import java.lang.Exception
 
 class HomePageViewModel : ViewModel() {
 
-    fun getMovies(): List<Movie> {
+    fun getMovies(index: Int): RequestResult? {
 
         val moviesRequest: RequestResult
 
@@ -22,7 +22,7 @@ class HomePageViewModel : ViewModel() {
             endpoint.getNowPlayingMovies(
                 api_key = "c2e78b4a8c14e65dd6e27504e6df95ad",
                 language = "en-US",
-                page = 1
+                page = index.toLong()
             )
 
         try {
@@ -32,12 +32,12 @@ class HomePageViewModel : ViewModel() {
             let { it ->
                 moviesRequest = it
 
-                return moviesRequest.results
+                return moviesRequest
             }
         } catch (error: Exception) {
             error.message?.let { Log.e("Error", it) }
         }
 
-        return emptyList()
+        return null
     }
 }

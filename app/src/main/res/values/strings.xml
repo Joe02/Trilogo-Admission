@@ -6,4 +6,6 @@
     <string name="searchMoviePlaceHolder">Search for a movie</string>
     <string name="movieDetailsContent">Open movie\'s details</string>
     <string name="moviePosterContent">Movie poster</string>
+    <string name="nextPageContent">Next Page</string>
+    <string name="previousPageContent">Previous Page</string>
 </resources>

@@ -10,15 +10,7 @@
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.example.trilogoapplication.fragments.HomePageFragment"
-        android:label="HomePageFragment" >
-        <action
-            android:id="@+id/action_homePageFragment_to_searchPageFragment"
-            app:destination="@id/searchPageFragment" />
-    </fragment>
+        android:label="HomePageFragment" />
 
-    <fragment
-        android:id="@+id/searchPageFragment"
-        android:name="com.example.trilogoapplication.fragments.SearchPageFragment"
-        android:label="SearchPageFragment" />
 
 </navigation>

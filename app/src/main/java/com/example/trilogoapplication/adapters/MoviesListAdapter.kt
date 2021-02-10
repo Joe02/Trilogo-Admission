@@ -27,8 +27,8 @@ class MoviesListAdapter(private val moviesList: List<Movie>, private val context
     private var inflater: LayoutInflater? = null
     private var parent: ViewGroup? = null
     private val bindings: MutableList<ItemMovieListBinding> = mutableListOf()
-    private var cardsHeight : MutableList<ConstraintLayout> = mutableListOf()
-    private var cardsArrows : MutableList<ImageView> = mutableListOf()
+    private var cardsHeight: MutableList<ConstraintLayout> = mutableListOf()
+    private var cardsArrows: MutableList<ImageView> = mutableListOf()
     private val FADE_DURATION = 1000 //FADE_DURATION in milliseconds
 
 
@@ -87,23 +87,36 @@ class MoviesListAdapter(private val moviesList: List<Movie>, private val context
             Typeface.DEFAULT, Typeface.ITALIC
         )
 
-        holder.movieSinopsis.text = moviesList[position].overview?.substring(0, 60) + "..."
+        if (moviesList[position].overview?.length!! > 70) {
+            holder.movieSinopsis.text = moviesList[position].overview?.substring(0, 70) + "..."
+        } else {
+            holder.movieSinopsis.text = moviesList[position].overview
+        }
 
-        Glide.with(context).load("https://image.tmdb.org/t/p/w500/"+ moviesList[position].posterPath).into(holder.moviePoster)
+        Glide.with(context)
+            .load("https://image.tmdb.org/t/p/w500/" + moviesList[position].posterPath)
+            .into(holder.moviePoster)
 
         cardsHeight[position].setOnClickListener {
-            if(cardsHeight[position].height < 190) {
+            if (cardsHeight[position].height < 210) {
                 holder.movieSinopsis.text = moviesList[position].overview
                 cardsArrows[position].setImageResource(R.drawable.arrow_up)
-                cardsHeight[position].layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 200)
+                cardsHeight[position].layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    120 + (moviesList[position].overview?.length?.times(
+                        1
+                    )!!).toInt() - 10
+                )
 
             } else {
-                holder.movieSinopsis.text = moviesList[position].overview?.substring(0, 60) + "..."
+                holder.movieSinopsis.text = moviesList[position].overview?.substring(0, 70) + "..."
                 cardsArrows[position].setImageResource(R.drawable.arrow_down)
-                cardsHeight[position].layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 120)
+                cardsHeight[position].layoutParams =
+                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 150)
             }
         }
 
+        holder.setIsRecyclable(false)
         setFadeAnimation(holder.itemView)
     }
 
