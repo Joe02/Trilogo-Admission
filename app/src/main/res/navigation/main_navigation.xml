@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    tools:ignore="InvalidNavigation"
-    app:startDestination="@id/home">
+    app:startDestination="@id/homePageFragment">
 
 
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.example.trilogoapplication.fragments.HomePageFragment"
-        android:label="HomePageFragment" />
+        android:label="HomePageFragment" >
+        <action
+            android:id="@+id/action_homePageFragment_to_informationPageFragment"
+            app:destination="@id/informationPageFragment"
+            app:popUpTo="@id/homePageFragment" />
+    </fragment>
+    <fragment
+
+
+        android:id="@+id/informationPageFragment"
+        android:name="com.example.trilogoapplication.fragments.InformationPageFragment"
+        android:label="InformationPageFragment" >
+
+
+    </fragment>
 
 
 </navigation>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trilogoapplication.R
 import com.example.trilogoapplication.adapters.MoviesListAdapter
@@ -48,6 +49,12 @@ class HomePageFragment : Fragment() {
         homeBinding.moviesRecyclerView.setHasFixedSize(true)
         moviesListAdapter =
             context?.let { it1 -> MoviesListAdapter(movieRequest.results, it1) }!!
+
+        if(!movieRequest.results.isEmpty()) {
+            homeBinding.nextPage.visibility = View.VISIBLE
+            homeBinding.previousPage.visibility = View.VISIBLE
+        }
+
         homeBinding.moviesRecyclerView.adapter = moviesListAdapter
 
     }
@@ -91,6 +98,8 @@ class HomePageFragment : Fragment() {
                             moviesListAdapter =
                                 context?.let { it1 -> MoviesListAdapter(movieRequest.results, it1) }!!
 
+                            setRecyclerItemClickListener()
+
                             homeBinding.moviesRecyclerView.adapter = moviesListAdapter
 
                             requests[requestIndex] = movieRequest.results
@@ -106,11 +115,28 @@ class HomePageFragment : Fragment() {
                                         it, it1)
                                 } }!!
 
+                            setRecyclerItemClickListener()
+
                             homeBinding.moviesRecyclerView.adapter = moviesListAdapter
                         }
                     }
 
 
                 })
+    }
+
+    fun setRecyclerItemClickListener() {
+        moviesListAdapter.onItemClick = {
+                movie -> val args = Bundle()
+            args.putString("moviePoster", movie.posterPath)
+            args.putString("MovieOriginalTitle", movie.originalTitle)
+            args.putString("movieTitle", movie.title)
+            args.putString("movieOverview", movie.overview)
+            args.putString("movieLanguage", movie.movieLanguage)
+            movie.popularity?.let { args.putDouble("moviePopularity", it) }
+
+            view?.findNavController()?.navigate(R.id.action_homePageFragment_to_informationPageFragment, args)
+
+        }
     }
 }
