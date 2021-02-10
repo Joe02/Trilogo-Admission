@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -29,7 +28,7 @@ class MoviesListAdapter(private val moviesList: List<Movie>, private val context
     private val bindings: MutableList<ItemMovieListBinding> = mutableListOf()
     private var cardsHeight: MutableList<ConstraintLayout> = mutableListOf()
     private var cardsArrows: MutableList<ImageView> = mutableListOf()
-    private val FADE_DURATION = 1000 //FADE_DURATION in milliseconds
+    private val fadeDuration = 1000 //FADE_DURATION in milliseconds
 
 
     inner class ItemViewHolder(binding: ItemMovieListBinding) :
@@ -89,7 +88,7 @@ class MoviesListAdapter(private val moviesList: List<Movie>, private val context
         )
 
         if (moviesList[position].overview?.length!! > 70) {
-            holder.movieSinopsis.text = moviesList[position].overview?.substring(0, 70) + "..."
+            holder.movieSinopsis.text = moviesList[position].overview?.substring(0, 60) + "..."
         } else {
             holder.movieSinopsis.text = moviesList[position].overview
         }
@@ -110,7 +109,7 @@ class MoviesListAdapter(private val moviesList: List<Movie>, private val context
                 )
 
             } else {
-                holder.movieSinopsis.text = moviesList[position].overview?.substring(0, 70) + "..."
+                holder.movieSinopsis.text = moviesList[position].overview?.substring(0, 60) + "..."
                 cardsArrows[position].setImageResource(R.drawable.arrow_down)
                 cardsHeight[position].layoutParams =
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 150)
@@ -123,7 +122,7 @@ class MoviesListAdapter(private val moviesList: List<Movie>, private val context
 
     private fun setFadeAnimation(view: View) {
         val anim = AlphaAnimation(0.0f, 1.0f)
-        anim.duration = FADE_DURATION.toLong()
+        anim.duration = fadeDuration.toLong()
         view.startAnimation(anim)
     }
 

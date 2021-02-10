@@ -50,6 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     app:layout_constraintLeft_toLeftOf="@id/movieTitleTextView"
                     app:layout_constraintTop_toBottomOf="@id/movieTitleTextView" />

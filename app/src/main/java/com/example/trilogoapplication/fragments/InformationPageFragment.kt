@@ -35,21 +35,26 @@ class InformationPageFragment : Fragment() {
     fun loadMovieInformations() {
 
         context?.let {
-            Glide.with(it).load("https://image.tmdb.org/t/p/w500/" + arguments?.getString("moviePoster")).into(informationBinding.movieInfoPoster)
+            Glide.with(it)
+                .load("https://image.tmdb.org/t/p/w500/" + arguments?.getString("moviePoster"))
+                .into(informationBinding.movieInfoPoster)
         }
 
-        informationBinding.movieInfoOriginalTitle.typeface = Typeface.create(Typeface.DEFAULT_BOLD, Typeface.BOLD)
+        informationBinding.movieInfoOriginalTitle.typeface =
+            Typeface.create(Typeface.DEFAULT_BOLD, Typeface.BOLD)
         informationBinding.movieInfoOriginalTitle.text = arguments?.getString("MovieOriginalTitle")
 
-        informationBinding.movieInfoEnglishTitle.typeface = Typeface.create(Typeface.DEFAULT, Typeface.ITALIC)
+        informationBinding.movieInfoEnglishTitle.typeface =
+            Typeface.create(Typeface.DEFAULT, Typeface.ITALIC)
         informationBinding.movieInfoEnglishTitle.text = arguments?.getString("movieTitle")
 
-        if(arguments?.getString("movieLanguage") != "en") {
+        if (arguments?.getString("movieLanguage") != "en") {
             informationBinding.movieInfoEnglishTitle.visibility = View.GONE
         }
 
         informationBinding.movieInfoOverView.text = arguments?.getString("movieOverview")
-        informationBinding.movieInfoPopularity.text = "Popularity: " + arguments?.getDouble("moviePopularity").toString()
+        informationBinding.movieInfoPopularity.text =
+            "Popularity: " + arguments?.getDouble("moviePopularity").toString()
 
     }
 }
