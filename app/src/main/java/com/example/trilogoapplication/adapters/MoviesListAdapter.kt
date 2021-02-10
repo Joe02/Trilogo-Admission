@@ -83,6 +83,7 @@ class MoviesListAdapter(private val moviesList: List<Movie>, private val context
         if (moviesList[position].movieLanguage != "en") {
             holder.movieEnglishTitle.text = "(${moviesList[position].title})"
         }
+
         holder.movieEnglishTitle.typeface = Typeface.create(
             Typeface.DEFAULT, Typeface.ITALIC
         )
