@@ -37,14 +37,6 @@ class HomePageFragment : Fragment() {
         homeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false)
 
-        checkForPreviousRequests()
-        setViewClickListeners()
-        setUpMoviesRecycler()
-
-        return homeBinding.root
-    }
-
-    fun checkForPreviousRequests() {
         val db = context?.let {
             Room.databaseBuilder(
                 it,
@@ -52,8 +44,17 @@ class HomePageFragment : Fragment() {
             ).allowMainThreadQueries().build()
         }
 
-        val requestResultDao = db?.requestResultDao()
-        val request: RequestResult? = requestResultDao?.getLastRequest()
+        db?.let { checkForPreviousRequests(it) }
+        db?.let { setViewClickListeners(it) }
+        setUpMoviesRecycler()
+
+        return homeBinding.root
+    }
+
+    fun checkForPreviousRequests(db: RoomDatabase) {
+
+        val requestResultDao = db.requestResultDao()
+        val request: RequestResult? = requestResultDao.getLastRequest()
 
         if (request != null) {
             movieRequest = request
@@ -76,21 +77,21 @@ class HomePageFragment : Fragment() {
 
     }
 
-    private fun setViewClickListeners() {
+    private fun setViewClickListeners(db: RoomDatabase) {
 
         homeBinding.nextPage.setOnClickListener {
             if (requestIndex != movieRequest.pagesLength) {
                 requestIndex += 1
             }
 
-            doRequest()
+            doRequest(db = db)
         }
 
         homeBinding.previousPage.setOnClickListener {
             if (requestIndex != 1) {
                 requestIndex -= 1
             }
-            doRequest()
+            doRequest(db = db)
         }
 
         homeBinding.floatingActionButton.setOnClickListener {
@@ -98,11 +99,11 @@ class HomePageFragment : Fragment() {
             homeBinding.nextPage.visibility = View.VISIBLE
             homeBinding.previousPage.visibility = View.VISIBLE
 
-            doRequest()
+            doRequest(db = db)
         }
     }
 
-    fun doRequest() {
+    fun doRequest(db: RoomDatabase) {
         (
                 GlobalScope.launch {
 
@@ -121,6 +122,8 @@ class HomePageFragment : Fragment() {
 
                             requests[requestIndex] = movieRequest.results
 
+                            updateRoom(db = db)
+
                         }
 
                     } else {
@@ -136,11 +139,20 @@ class HomePageFragment : Fragment() {
                             setRecyclerItemClickListener()
 
                             homeBinding.moviesRecyclerView.adapter = moviesListAdapter
+
+                            updateRoom(db = db)
                         }
                     }
 
 
                 })
+    }
+
+    fun updateRoom(db: RoomDatabase) {
+        val requestResultDao = db.requestResultDao()
+        val request: RequestResult? = requestResultDao.getLastRequest()
+        request?.let { requestResultDao.deleteLastRequest(it) }
+        requestResultDao.insertRequest(movieRequest)
     }
 
     fun setRecyclerItemClickListener() {

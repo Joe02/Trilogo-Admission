@@ -9,4 +9,10 @@ import androidx.room.Query
 interface RequestResultDao {
     @Query("SELECT * FROM request")
     fun getLastRequest(): RequestResult
+
+    @Insert
+    fun insertRequest(vararg request: RequestResult)
+
+    @Delete
+    fun deleteLastRequest(request: RequestResult)
 }
