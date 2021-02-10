@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.example.trilogoapplication.R
 import com.example.trilogoapplication.adapters.MoviesListAdapter
 import com.example.trilogoapplication.databinding.FragmentHomePageBinding
-import com.example.trilogoapplication.models.Movie
-import com.example.trilogoapplication.models.RequestResult
+import com.example.trilogoapplication.models.*
 import com.example.trilogoapplication.viewmodels.HomePageViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -37,10 +37,27 @@ class HomePageFragment : Fragment() {
         homeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false)
 
+        checkForPreviousRequests()
         setViewClickListeners()
         setUpMoviesRecycler()
 
         return homeBinding.root
+    }
+
+    fun checkForPreviousRequests() {
+        val db = context?.let {
+            Room.databaseBuilder(
+                it,
+                RoomDatabase::class.java, "movies-db"
+            ).allowMainThreadQueries().build()
+        }
+
+        val requestResultDao = db?.requestResultDao()
+        val request: RequestResult? = requestResultDao?.getLastRequest()
+
+        if (request != null) {
+            movieRequest = request
+        }
     }
 
     private fun setUpMoviesRecycler() {
@@ -103,6 +120,7 @@ class HomePageFragment : Fragment() {
                             homeBinding.moviesRecyclerView.adapter = moviesListAdapter
 
                             requests[requestIndex] = movieRequest.results
+
                         }
 
                     } else {
