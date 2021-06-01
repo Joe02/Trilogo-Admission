@@ -4,7 +4,7 @@
 
 ### Funções disponíveis no App:
 
-> Visualizar a informação de mais de 100 filmes em cartas <br />
+> Visualizar a informação de mais de 100 filmes em cartaz <br />
 
 ### Bibliotecas utilizadas:
 
